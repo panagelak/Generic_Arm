@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+	<node name="Pub_to_Arduino_Class" pkg="arm_bringup" type="Pub_to_Arduino_Class" respawn="false" 
+  output="screen"/>
+
+	<include file="$(find arm_bringup)/launch/include/serial.launch"/>
+
+</launch>

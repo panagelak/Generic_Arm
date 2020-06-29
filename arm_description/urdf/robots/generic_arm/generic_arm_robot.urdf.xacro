@@ -1,0 +1,60 @@
+<?xml version='1.0'?>
+
+<robot name="generic_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+  <!-- Common design Properties-->
+  <xacro:include filename="$(find arm_description)/urdf/robots/generic_arm/configuration.urdf.xacro" />
+
+  <!-- If we use simulation include Gazebo Stuff - gazebo_ros_control && gazebo_grasp_plugin -->
+  <xacro:if value="$(arg sim)">
+
+      <!-- Gazebo ros control && gazebo grasp plugin -->
+      <xacro:include filename="$(find arm_description)/urdf/robots/generic_arm/generic_arm_robot.gazebo.xacro" />
+      
+  </xacro:if>
+
+  <!-- Incude Inertia macros -->
+  <xacro:include filename="$(find arm_description)/urdf/macros/inertia_macros.urdf.xacro" />
+
+  <!-- Include Generic Arm -->
+  <xacro:include filename="$(find arm_description)/urdf/arms/generic_arm/generic_arm.urdf.xacro" />
+  
+  <!-- Include Generic Gripper -->
+  <xacro:include filename="$(find arm_description)/urdf/grippers/generic_gripper/generic_gripper.urdf.xacro" />
+
+  <!-- Include Kinect Base -->
+  <xacro:include filename="$(find arm_description)/urdf/bases/kinect_base/kinect_base.urdf.xacro" />
+
+  <!-- Include Kinect -->
+  <xacro:include filename="$(find arm_description)/urdf/sensors/kinect/kinect.urdf.xacro" />
+
+  <link name="world"/>
+
+  <!-- Instanciate the Generic Arm macros -->
+  
+  <!-- connect arm -->
+  <xacro:generic_arm 
+    prefix="" 
+    parent="${generic_arm_parent}" 
+    transmission_hw_interface="${transmission_hw_interface}" 
+    safety_limits="${safety_limits}"
+    safety_pos_margin="${safety_pos_margin}"
+    safety_k_position="${safety_k_position}"/>
+
+  <!-- connect gripper-->
+  <xacro:generic_gripper 
+    prefix="" 
+    parent="${generic_gripper_parent}" 
+    transmission_hw_interface="${transmission_hw_interface}" 
+    safety_limits="${safety_limits}"
+    safety_pos_margin="${safety_pos_margin}"
+    safety_k_position="${safety_k_position}"/>
+
+  <xacro:kinect_base />
+
+  <xacro:sensor_kinect parent="${kinect_parent}" />
+
+
+</robot>
+

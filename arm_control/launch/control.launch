@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <!-- load controllers to param server-->
+  <rosparam file="$(find arm_control)/config/generic/joint_state_controller.yaml" command="load"/>
+  <rosparam file="$(find arm_control)/config/generic/generic_arm_control.yaml" command="load"/>
+  <rosparam file="$(find arm_control)/config/generic/generic_gripper_position_control.yaml" command="load"/>
+  <!--rosparam file="$(find arm_control)/config/generic/kinect_control.yaml" command="load"/-->
+
+
+  <!-- launch the controller manager for ros control -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" args="joint_state_controller  arm_controller gripper_controller"/>
+  
+
+
+</launch>

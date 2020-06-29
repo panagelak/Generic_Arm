@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+
+  <xacro:if value="$(arg sim)">
+      <xacro:include filename="$(find arm_description)/urdf/bases/kinect_base/kinect_base.gazebo.xacro" />
+  </xacro:if>
+  
+  <xacro:macro name="kinect_base">
+
+    <link name="kinect_base_footprint"></link>
+
+    <joint name="kinect_base_footprint_joint" type="fixed">
+      <xacro:insert_block name="kinect_base_joint_origin" />
+      <parent link="world"/>
+      <child link="kinect_base_footprint" />
+    </joint>
+
+    <link name='kinect_base'>
+
+
+     <inertial>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <mass value="100"/>
+       <inertia ixx="0.1"  ixy="0"  ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+     </inertial>
+
+      <collision name='collision'>
+        <origin xyz="0 0 0" rpy=" 0 0 0"/> 
+        <geometry>
+          <cylinder length="${kinect_base_length}" radius="${kinect_base_radius}" />
+        </geometry>
+      </collision>
+
+      <visual name='chassis_visual'>
+        <origin xyz="0 0 0" rpy=" 0 0 0"/>
+        <geometry>
+          <cylinder length="${kinect_base_length}" radius="${kinect_base_radius}" />
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="kinect_base_joint" type="fixed">
+      <origin xyz="0.0 0.0 ${kinect_base_length * 0.5}" rpy="0 0 0" />
+      <parent link="kinect_base_footprint"/>
+      <child link="kinect_base" />
+    </joint>
+
+  </xacro:macro>
+
+</robot>

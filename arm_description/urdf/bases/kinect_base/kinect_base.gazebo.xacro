@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+  <gazebo reference="kinect_base">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  
+
+</robot>
+

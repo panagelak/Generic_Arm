@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>  
+  <node name="serial_node" pkg="rosserial_arduino" type="serial_node.py" output="screen">
+      <rosparam file="$(find ommp_bringup)/config/start/serial_params.yaml" command="load" />
+  </node>
+</launch>

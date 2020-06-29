@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+  <!-- robot parameters -->
+  <arg name="sim" default="false"/>
+  <arg name="robot" default="generic_arm"/> 
+  
+
+  <!-- Load the Robot description -->
+  <include file="$(find arm_description)/launch/description.launch">
+    <arg name="robot" value="$(arg robot)" />
+    <arg name="sim" value="$(arg sim)" />
+  </include>
+
+  <!-- Load the Hardware Interface of the Robot -->
+  <include file="$(find arm_control)/launch/hardware_interface.launch"/>
+
+  <!-- Load the Robot Controllers -->
+  <include file="$(find arm_control)/launch/control.launch"/>
+
+
+  <!--===========================================-->
+  <!--NOT USED FOR PSEUDO REAL BUT FOR REAL ROBOT-->
+  <!--===========================================-->
+
+
+  <!-- Transforms Joint_states to appropiate servo commmands for rosserial -->
+  <!-- Arm is a clone of joint_States - perfect execution -->
+  <!--node name="Pub_to_Arduino_Class" pkg="ommp_bringup" type="Pub_to_Arduino_Class" respawn="false" 
+  output="screen"/-->
+  
+  <!-- Load the PCA9685 Driver IF you are using an I2C PCA9685 Device on e.g Jetson Nano or PC Directly-->
+  <!--node name="PCA9685_driver" pkg="pwm_pca9685" type="pca9685_node" respawn="false" 
+  output="screen"/-->
+
+  
+  <!-- Start rosserial Arduino node -->
+  <!--node name="serial_node" pkg="rosserial_python" type="serial_node.py" output="screen">
+      <rosparam file="$(find ommp_bringup)/config/start/serial_params.yaml" command="load" />
+  </node-->
+
+
+</launch>

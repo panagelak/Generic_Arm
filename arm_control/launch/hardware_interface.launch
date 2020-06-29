@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <!--Load Hardware Interface Configuration to param server -->
+  <rosparam file="$(find arm_control)/config/generic/hardware_interface_settings.yaml" command="load"/>
+
+  <!-- start hardware interface node for the arm -->
+  <node name="myrobot_hardware_interface" pkg="ros_control_boilerplate" type="myrobot_hw_main"
+          output="screen" launch-prefix=""/>
+
+</launch>

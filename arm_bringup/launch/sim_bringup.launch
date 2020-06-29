@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+  <!-- robot parameters -->
+  <arg name="sim" default="true"/>
+  <arg name="robot" default="generic_arm"/>
+  
+  <!--Gazebo parameters-->
+  <arg name="world" default="empty"/> <!--empty, box_world-->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- launch the gazebo with the specified world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find arm_bringup)/worlds/$(arg world).world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- Load the Robot description -->
+  <include file="$(find arm_description)/launch/description.launch">
+    <arg name="robot" value="$(arg robot)" />
+    <arg name="sim" value="$(arg sim)" />
+  </include>
+
+  <!-- Load the Robot Controllers -->
+  <include file="$(find arm_control)/launch/control.launch"/>
+  
+  <!--spawn the robot in gazebo world-->  
+  <node name="urdf_spawner_$(arg robot)" pkg="gazebo_ros" type="spawn_model" respawn="false" 
+  output="screen" args="-urdf -param robot_description -model generic_arm -z 0.0"/>
+
+  <!-- Load Black Box description to param server -->
+  
+  <arg name="object" default="box_black"/>
+  <param name="$(arg object)_description" textfile="$(find arm_description)/urdf/objects/$(arg object)/$(arg object).urdf"/>
+  <!-- spawn the Black Box in Gazebo -->
+  
+  <node name="urdf_spawner_$(arg object)" pkg="gazebo_ros" type="spawn_model" respawn="false" 
+  output="screen" args="-urdf -param $(arg object)_description -model $(arg object) -x 0.3 -y 0.0 -z 0.0"/>
+
+</launch>
+
+

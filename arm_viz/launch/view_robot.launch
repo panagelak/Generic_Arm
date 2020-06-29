@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Arm configuration to view. See arm_description for details. -->
+
+  <arg name="robot" default="generic_arm"/>
+  <arg name="sim" default="true"/>
+
+  <include file="$(find arm_description)/launch/description.launch">
+    <arg name="robot" value="$(arg robot)" />
+    <arg name="sim" value="$(arg sim)" />
+  </include>
+
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find arm_viz)/rviz/view_robot.rviz" />
+
+</launch>
