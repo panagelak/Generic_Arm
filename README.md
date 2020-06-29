@@ -8,8 +8,8 @@
 
 **This project is meant to help you with connecting ANY DIY ARM with feedback or not to ROS , both in simulation and on reality!!**
 
-![Generic Arm](data/img/rviz_robot.jpg)
-![Pick Place](data/img/pick_place_server.jpg)
+![Generic Arm](data/img/rviz_robot.png)
+![Pick Place](data/img/pick_place_server.png)
 
 ## URDF
 
